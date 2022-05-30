@@ -13,36 +13,33 @@ struct tipo_cadastro
 
 } registros[100];
 
-//Funçoes que serao usadas
+//Funï¿½oes que serï¿½o usadas
 void cadastrar(int cod, int pos);
 
-//Funçao para consulta
-void consultar( void );
+//Funï¿½ï¿½o para consulta
+void consultar();
 
-//Funçao para exibir relatorio
-//int relatorio( void );
+//Funï¿½ï¿½o para verificar posiï¿½ï¿½o
+int verifica_pos();
 
-//Função para verificar posição
-int verifica_pos( void );
-
-//Função para verificar codigo
+//Funï¿½ï¿½o para verificar cï¿½digo
 int verifica_cod( int cod );
 
-//Função para verificar posição do codigo
-int verifica_pos( void );
+//Funï¿½ï¿½o para verificar posiï¿½ï¿½o do cï¿½digo
+int verifica_pos();
 
-//Função para excluir cadastro
-void excluir( void );
+//Funï¿½ï¿½o para excluir cadastro
+void excluir();
 
-//Começo do programa principal
-int main( void )
+//Comeï¿½o do programa principal
+int main()
 {
     int op = 0, posicao, codaux, retorno;
 
-    while ( op != 5 )
-    {
+// Enquanto op for diferente de 5 ele ficarï¿½ rodando o sistema
+    while ( op != 5 ){
         printf("\n\n\t\t\t\t** Cadastro e Consulta de Clientes**\n\n\n");
-        printf("MENU\n\n1 - Cadastrar\n2 - Consultar\n3 - Excluir\n4 - Relatorio\n5 - Sair\n\nOpcao: ");
+        printf("MENU\n\n1 - Cadastrar\n2 - Consultar\n3 - Excluir\n4 - Sair\n\nOpcao: ");
         scanf("%d",&op);
         system("cls");
         switch ( op )
@@ -56,7 +53,8 @@ int main( void )
                 {
 
                     printf("\nEntre com o codigo de cadastro do Cliente: \n");
-                    scanf("%d",&codaux);fflush(stdin);
+                    scanf("%d",&codaux);
+					fflush(stdin);
 
                     retorno = verifica_cod( codaux );
 
@@ -77,20 +75,14 @@ int main( void )
                 consultar();
                 break;
             }
-            case 3:
+            case 3: // EXCLUIR
             {
                 excluir();
                 break;
             }
-            case 4:
+            case 4: // SAIR
             {
-                system("cls");
-                printf("Opcao indisponivel");
-                break;
-            } // FALTOU
-            case 5:
-            {
-                 printf("\n Programa de cadastro e Consulta de Clientes by Bruno Groppo - Tchau");
+                 printf("\n Programa de cadastro e Consulta de Clientes by Bruno Groppo e Sergio Baumgartner - Tchau");
                  getchar();
                  break;
             }
@@ -100,14 +92,13 @@ int main( void )
         }
     }
   
-
     getchar();
 
     return 0;
 
 }//Final da Main
 
-// FUNÇAO CADASTRAR
+// FUNï¿½AO CADASTRAR
 void cadastrar( int cod, int pos )
 {
     pos = verifica_pos();
@@ -121,7 +112,9 @@ void cadastrar( int cod, int pos )
     gets(registros[pos].endereco);
 
     printf("\nInforme o telefone:");
-    gets(registros[pos].endereco);
+    gets(registros[pos].tel);
+    
+    registros[pos].vazio = 1;
 
     printf("\nCadastro Realizado com Sucesso!\n\n");
     getchar();
@@ -129,38 +122,46 @@ void cadastrar( int cod, int pos )
 
     system("cls");
 
-} //Final da Função Cadastrar
+} //Final da Funï¿½ï¿½o Cadastrar
 
-//FUNÇÃO CONSULTAR
+//FUNï¿½ï¿½O CONSULTAR
 void consultar( void )
 {
-    int cont = 0, cod;
-
-    printf("\nEntre com o codigo\n");
-    scanf("%d",&cod);
-
-    system("cls");
+    int cont = 0, cod, auxi;
 
     while ( cont <= 100 )
     {
+   		printf("\nDigite 1 para consultar todos os clientes\n");
+		printf("\nDigite 2 para consultar pelo codigo do cliente\n");
+    	scanf("%d",&auxi);
+    	
+    	system("cls");
+	
+		if(auxi == 1){			
+      	    	if (registros[cont].vazio==1){
+                	printf("\nNome do Cliente: %s\n",registros);
+    	            system ("pause");	
+    	            system("cls");	
+                	break;
+            	}
+		}else if(auxi == 2){
+			
+			printf("\nEntre com o codigo\n");
+    		scanf("%d",&cod);
 
-        if (registros[cont].cod==cod)
-        {
-            if (registros[cont].vazio==1)
-            {
-
-                printf("\nNome do Cliente: \n%s\n",registros[cont].cliente);
-                printf("\nEndereco: \n%s\n",registros[cont].endereco);
-                printf("\nTelefone:\n%s\n",registros[cont].tel);
-                printf("\n");
-
-                system ("pause");
-
-                system("cls");
-
-                break;
-
-            }
+    		system("cls");
+			
+        	if (registros[cont].cod==cod){
+      	    	if (registros[cont].vazio==1){
+                	printf("\nNome do Cliente: %s\n",registros[cont].cliente);
+            	    printf("\nEndereco: %s\n",registros[cont].endereco);
+        	        printf("\nTelefone:%s\n",registros[cont].tel);
+    	            printf("\n");	
+    	            system ("pause");	
+    	            system("cls");	
+                	break;
+            	}
+        	}
         }
 
         cont++;
@@ -171,26 +172,24 @@ void consultar( void )
     }
 }
 
-//FUNÇÃO VERIFICA POSIÇÃO
+//FUNï¿½ï¿½O VERIFICA POSIï¿½ï¿½O
 int verifica_pos( void )
 {
     int cont = 0;
 
     while ( cont <= 100 )
     {
-
         if ( registros[cont].vazio == 0 )
             return(cont);
 
         cont++;
-
     }
 
     return(-1);
 
 }
 
-//FUNÇÃO ZERAR
+//FUNï¿½ï¿½O ZERAR
 void zerar( void )
 {
     int cont;
@@ -199,7 +198,7 @@ void zerar( void )
         registros[cont].vazio = 0;
 }
 
-//FUNÇÃO VERIFICA CODIGO
+//FUNï¿½ï¿½O VERIFICA Cï¿½DIGO
 int verifica_cod( int cod )
 {
     int cont = 0;
@@ -216,7 +215,7 @@ int verifica_cod( int cod )
 
 }
 
-//FUNÇÃO EXCLUIR
+//FUNï¿½ï¿½O EXCLUIR
 void excluir( void )
 {
     int cod, cont = 0;
